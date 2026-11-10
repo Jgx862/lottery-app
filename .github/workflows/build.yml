@@ -10,10 +10,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Inspect repo
+        run: |
+          ls -la
+          find . -maxdepth 3 -name '*.zip' -not -path './.git/*'
+
       - name: Unzip project
         run: |
           mkdir -p src
-          unzip -q lottery-app.zip -d src
+          ZIP=$(find . -maxdepth 3 -name '*.zip' -not -path './.git/*' | head -n 1)
+          echo "using: $ZIP"
+          unzip -q "$ZIP" -d src
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -24,17 +31,17 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Set up Gradle
+      - name: Set up Gradle      - name: 设置 Gradle
         uses: gradle/actions/setup-gradle@v3
-        with:
+        with:带有:
           gradle-version: '8.7'
 
-      - name: Build debug APK
+      - name: Build debug APK      - name: 构建调试 APK - 名称: 构建调试 APK - 名称: 构建调试 APK - 名称: 构建调试APK
         working-directory: src
-        run: gradle :app:assembleDebug --no-daemon --stacktrace
+        run: gradle :app:assembleDebug --no-daemon --stacktrace运行: gradle:app:assembleDebug --no-daemon --stacktrace
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: lottery-apk
-          path: src/app/build/outputs/apk/debug/*.apk
+      - name: Upload APK      - 名称: 上传 APK - 名称: 上传 APK
+        uses: actions/upload-artifact@v4用途: actions/upload-artifact@v4用途: actions/upload-artifact@v4用途: actions/upload-artifact@v4用途: actions/upload-artifact@v4
+        with:带有:
+          name: lottery-apk名称: lottery-apk彩票apk
+          path: src/app/build/outputs/apk/debug/*.apk路径: 路径: src/app/build/outputs/apk/debug/*.apk路径: src/app/build/outputs/apk/debug/*.apk
